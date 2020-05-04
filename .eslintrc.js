@@ -18,7 +18,8 @@ module.exports = {
   rules: {
     // Include .prettierrc.js rules
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
-
+    '@typescript-eslint/no-explicit-any': 'off',
     'react/prop-types': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
   },
 };
