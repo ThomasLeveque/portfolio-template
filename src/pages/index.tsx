@@ -1,28 +1,24 @@
 import React from 'react';
-import { NextPage, GetServerSideProps } from 'next';
-import useSWR from 'swr';
+import { NextPage, GetStaticProps } from 'next';
 import Link from 'next/link';
 
 import fetch from '../libs/fetch';
 import { Project } from '../interfaces/project.interface';
-import { CFUrl } from '../libs/config';
 import Layout from '../components/layout';
 
 interface HomeProps {
-  initialData: Project[];
+  projects: Project[];
 }
 
-const HomePage: NextPage<HomeProps> = ({ initialData }) => {
-  const { data } = useSWR<Project[]>('/api/projects', fetch, { initialData });
-
+const HomePage: NextPage<HomeProps> = ({ projects }) => {
   return (
     <Layout title="Portfolio template | Home">
       <main>
         <h1>Portfolio template</h1>
 
         <section>
-          {data
-            ? data.map((project: Project) => {
+          {projects
+            ? projects.map((project: Project) => {
                 return (
                   <article key={project.id}>
                     <Link href="/projects/[projectId]" as={`/projects/${project.id}`}>
@@ -42,9 +38,9 @@ const HomePage: NextPage<HomeProps> = ({ initialData }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const data: Project[] = await fetch(`${CFUrl}/getProjects`);
-  return { props: { initialData: data } };
+export const getStaticProps: GetStaticProps = async () => {
+  const projects: Project[] = await fetch(`/getProjects`);
+  return { props: { projects } };
 };
 
 export default HomePage;

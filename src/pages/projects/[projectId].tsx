@@ -1,33 +1,45 @@
 import React from 'react';
+import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
-import { NextPage, GetServerSideProps } from 'next';
-import useSWR from 'swr';
 
 import fetch from '../../libs/fetch';
-import { CFUrl } from '../../libs/config';
 import { Project } from '../../interfaces/project.interface';
 import Layout from '../../components/layout';
 
 interface ProjectProps {
-  initialData: Project;
+  project: Project;
 }
 
-const ProjectPage: NextPage<ProjectProps> = ({ initialData }) => {
+const ProjectPage: NextPage<ProjectProps> = ({ project }) => {
   const router = useRouter();
-  const { projectId } = router.query;
 
-  const { data } = useSWR<Project>(`/api/projects/${projectId}`, fetch, { initialData });
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <Layout title={`Portfolio template | ${data && data.name}`}>
-      {data ? <p>project: {data.name}</p> : 'Loading...'}
+    <Layout title={`Portfolio template | ${project && project.name}`}>
+      {project ? <p>project: {project.name}</p> : 'Loading...'}
     </Layout>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query: { projectId } }) => {
-  const data: Project = await fetch(`${CFUrl}/getProject?projectId=${projectId}`);
-  return { props: { initialData: data } };
+export const getStaticPaths: GetStaticPaths = async () => {
+  const projects: Project[] = await fetch('/getProjects');
+
+  const paths = projects.map((project: Project) => ({
+    params: { projectId: project.id },
+  }));
+
+  return {
+    paths,
+    fallback: true,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const project: Project = await fetch(`/getProject?projectId=${params?.projectId}`);
+  return { props: { project } };
 };
 
 export default ProjectPage;
