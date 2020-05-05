@@ -1,6 +1,7 @@
 import React from 'react';
 import { NextPage, GetStaticProps } from 'next';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 import fetch from '../libs/fetch';
 import { Project } from '../interfaces/project.interface';
@@ -12,29 +13,31 @@ interface HomeProps {
 
 const HomePage: NextPage<HomeProps> = ({ projects }) => {
   return (
-    <Layout title="Portfolio template | Home">
-      <main>
-        <h1>Portfolio template</h1>
+    <motion.div exit={{ opacity: 0 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <Layout title="Portfolio template | Home">
+        <main>
+          <h1>Portfolio template</h1>
 
-        <section>
-          {projects
-            ? projects.map((project: Project) => {
-                return (
-                  <article key={project.id}>
-                    <Link href="/projects/[projectId]" as={`/projects/${project.id}`}>
-                      <a>{project.id}</a>
-                    </Link>
-                    <h2>{project.name}</h2>
-                    <h4>{project.desc}</h4>
-                  </article>
-                );
-              })
-            : 'Loading...'}
-        </section>
-      </main>
+          <section>
+            {projects
+              ? projects.map((project: Project) => {
+                  return (
+                    <article key={project.id}>
+                      <Link href="/projects/[projectId]" as={`/projects/${project.id}`}>
+                        <a>{project.id}</a>
+                      </Link>
+                      <h2>{project.name}</h2>
+                      <h4>{project.desc}</h4>
+                    </article>
+                  );
+                })
+              : 'Loading...'}
+          </section>
+        </main>
 
-      <style jsx>{``}</style>
-    </Layout>
+        <style jsx>{``}</style>
+      </Layout>
+    </motion.div>
   );
 };
 

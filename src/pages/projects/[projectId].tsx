@@ -1,6 +1,6 @@
 import React from 'react';
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next';
-import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
 
 import fetch from '../../libs/fetch';
 import { Project } from '../../interfaces/project.interface';
@@ -11,16 +11,12 @@ interface ProjectProps {
 }
 
 const ProjectPage: NextPage<ProjectProps> = ({ project }) => {
-  const router = useRouter();
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <Layout title={`Portfolio template | ${project && project.name}`}>
-      {project ? <p>project: {project.name}</p> : 'Loading...'}
-    </Layout>
+    <motion.div exit={{ opacity: 0 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <Layout title={`Portfolio template | ${project && project.name}`}>
+        {project ? <p>project: {project.name}</p> : 'Loading...'}
+      </Layout>
+    </motion.div>
   );
 };
 
@@ -33,7 +29,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 };
 

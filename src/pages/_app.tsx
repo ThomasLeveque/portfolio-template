@@ -1,10 +1,11 @@
 import React from 'react';
 import { AppProps } from 'next/app';
+import { AnimatePresence } from 'framer-motion';
 import Head from 'next/head';
 
 import Header from '../components/header';
 
-const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
+const MyApp = ({ Component, pageProps, router }: AppProps): JSX.Element => {
   return (
     <>
       <Head>
@@ -15,7 +16,9 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Component {...pageProps} />
+      <AnimatePresence exitBeforeEnter>
+        <Component {...pageProps} key={router.route} />
+      </AnimatePresence>
       <style jsx global>{`
         html,
         body {
