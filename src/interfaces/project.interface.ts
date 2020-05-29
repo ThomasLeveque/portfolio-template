@@ -1,4 +1,5 @@
 import { Image } from './image.interface';
+import { Category } from './category.interface';
 
 export interface Project {
   id: string;
@@ -7,9 +8,8 @@ export interface Project {
   projectUrl: string;
   projectSrc: string;
   date: string;
-  formatedDate?: string;
   skills: string[];
-  categories: string[];
+  categories: Category[];
   images: Image[];
   createdAt: number;
   updatedAt: number;
