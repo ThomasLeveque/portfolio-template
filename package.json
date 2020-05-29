@@ -8,11 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/styled-components": "^5.1.0",
     "framer-motion": "^1.10.3",
     "isomorphic-unfetch": "^3.0.0",
     "next": "9.3.6",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "styled-components": "^5.1.1",
     "swr": "^0.2.0"
   },
   "devDependencies": {

@@ -1,18 +1,20 @@
 import React from 'react';
 import Head from 'next/head';
 
+import { LayoutStyles } from './layout.styles';
+
 interface LayoutProps {
   title: string;
 }
 
 const Layout: React.FC<LayoutProps> = ({ title, children }) => {
   return (
-    <main className="container">
+    <LayoutStyles>
       <Head>
         <title>{title}</title>
       </Head>
       {children}
-    </main>
+    </LayoutStyles>
   );
 };
 

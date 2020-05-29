@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 import fetch from '@/libs/fetch';
 import { Project } from '@/interfaces/project.interface';
-import Layout from '@/components/layout';
+import Layout from '@/components/layout/layout';
 
 interface ProjectProps {
   project: Project;

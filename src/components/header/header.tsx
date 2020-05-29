@@ -1,13 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
 
+import { HeaderStyles } from './header.styles';
+
 const Header: React.FC = () => {
   return (
-    <header>
+    <HeaderStyles>
       <Link href="/">
         <a>Home</a>
       </Link>
-    </header>
+    </HeaderStyles>
   );
 };
 
