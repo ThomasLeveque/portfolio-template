@@ -1,10 +1,15 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
-class MyDocument extends Document {
+interface Props {
+  locale: "fr-FR";
+}
+
+class MyDocument extends Document<Props> {
   render() {
     return (
-      <Html>
+      <Html lang={this.props.locale.split('-')[0]}>
         <Head>
+          <meta name="viewport" content="width=device-width,height=device-height" key="viewport" />
           <link
             href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap"
             rel="stylesheet"
